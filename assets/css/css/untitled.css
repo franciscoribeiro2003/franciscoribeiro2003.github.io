@@ -26,7 +26,6 @@ h1 {
   font-size: 50px;
 }
 
-
 #services {
   background-color: #85bc3c;
 }
@@ -46,5 +45,12 @@ li {
 
 h6 {
   text-align: left;
+}
+
+.filtr-container {
+  display: grid; /* Make the container a grid container */
+  grid-auto-flow: column; /* Make the items align horizontally */
+  /* overflow-x: auto; Add a horizontal scrollbar if the content exceeds the width */
+  /* grid-gap: 10px;  */
 }
 
