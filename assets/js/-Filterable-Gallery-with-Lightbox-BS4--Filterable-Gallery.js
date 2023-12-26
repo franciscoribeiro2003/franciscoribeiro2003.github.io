@@ -9,46 +9,27 @@
 
 
 $(document).ready(function(){
-    $('.filtr-container').css('visibility','hidden');
-    $('.filtr-controls').after('<div class="filtr-loading"></div>');
-    
-    // init filterizr when images are loaded
-    options = {
-        filter: '1', // Set the initial filter to '1'
-        callbacks: {
-            onFilteringEnd: function() {
-                // only visible items
-                var gall = $('.filtr-controls span.active').attr('data-filter');
-                $('.filtr-item').each( function() {
-                    if($(this).css('opacity') != 0) {
-                        $(this).find('a').attr('data-simplelightbox',gall);
-                    } else {
-                        $(this).find('a').removeAttr('data-simplelightbox');
-                    }
-                });
-                // init simplelightbox
-                var lightbox = $('a[data-simplelightbox="'+gall+'"]').simpleLightbox({
-                    showCounter : false,
-                    history : false,
-                    captionType : 'data',
-                    captionsData : 'caption'
-                });
-                lightbox.refresh();
-            }
-        },
-        layout: 'sameWidth'
-    }
-    
-    $('.filtr-container').imagesLoaded( function() {
-        var filterizd = $('.filtr-container').filterizr(options);
-        $('.filtr-controls span[data-filter="1"]').addClass('active');
-        $('.filtr-container').css('visibility','visible');
-        $('.filtr-loading').remove();
-    });
-    
-    // active class for controls
-    $('.filtr-controls').on('click','span',function(){
-        $('.filtr-controls').find('span').removeClass('active');
+    $('.filtr-controls span').click(function(){
+        var category = $(this).data('filter');
+
+        // Remove 'active' class from all buttons
+        $('.filtr-controls span').removeClass('active');
+
+        // Add 'active' class to the clicked button
         $(this).addClass('active');
+
+        // Hide all items
+        $('.filtr-item').hide();
+
+        // Show items of the selected category
+        $('.filtr-item').each(function() {
+            var categories = $(this).data('category').toString().split(', ');
+
+            if (categories.includes(String(category))) {
+                $(this).show();
+            }
+        });
     });
+    // Trigger click event on the "College" category
+    $('.filtr-controls span[data-filter="1"]').click();
 });
