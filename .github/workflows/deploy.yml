@@ -29,7 +29,7 @@ jobs:
           cat > js/config.js << EOF
           // Auto-generated config file - DO NOT EDIT
           window.APP_CONFIG = {
-            pocketbaseUrl: "${POCKETBASE_URL}"
+            pocketbaseUrl: "$POCKETBASE_URL"
           };
           EOF
           
