@@ -1,5 +1,8 @@
-// Initialize PocketBase client
-const pocketbaseUrl = window.APP_CONFIG?.pocketbaseUrl;
+// Debug config
+console.log('Config object exists:', !!window.APP_CONFIG);
+
+// Initialize PocketBase client with proper URL handling and better fallback
+const pocketbaseUrl = window.APP_CONFIG?.pocketbaseUrl || 'https://pocketbase-cloudrun-761697169023.europe-southwest1.run.app';
 const pb = new PocketBase(pocketbaseUrl);
 
 // Global state
