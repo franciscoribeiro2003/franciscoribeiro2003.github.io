@@ -34,7 +34,11 @@ jobs:
           EOF
           
           # Debug (without revealing the secret)
-          echo "Secret is set: ${POCKETBASE_URL != ''}"
+          if [ -n "$POCKETBASE_URL" ]; then
+            echo "Secret is set (not showing value)"
+          else
+            echo "WARNING: Secret is empty!"
+          fi
           echo "Config file generated successfully"
 
       - name: Deploy to GitHub Pages
