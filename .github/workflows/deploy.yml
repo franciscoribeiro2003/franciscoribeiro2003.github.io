@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+# Add this permissions block
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -24,7 +28,7 @@ jobs:
           echo "window.APP_CONFIG = {" >> js/config.js
           echo "  pocketbaseUrl: '${{ secrets.POCKETBASE_URL }}'" >> js/config.js
           echo "};" >> js/config.js
-          cat js/config.js | grep -v pocketbase  # Print config without revealing the URL
+          echo "Config file generated successfully"
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
