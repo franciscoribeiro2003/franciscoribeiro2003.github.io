@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Francisco Ribeiro | Portfolio</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/imgCV_PNG.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Include PocketBase from CDN -->
+    <script src="https://unpkg.com/pocketbase@0.19.0/dist/pocketbase.umd.js"></script>
+</head>
+<body>
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-header-content">
+                <div class="profile-image">
+                    <img src="images/placeholder-profile.png" alt="Francisco Ribeiro" id="profile-image">
+                </div>
+                <div class="profile-info">
+                    <h1 class="name">Francisco Ribeiro</h1>
+                    <p class="title" id="profile-title" data-i18n="hero.title">Software Developer</p>
+                </div>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        
+        <div class="sidebar-content">
+            <nav class="sidebar-nav">
+                <ul class="nav-links">
+                    <li><a href="#about" class="nav-link" data-i18n="nav.about"><i class="fas fa-user"></i> <span>About</span></a></li>
+                    <li><a href="#experience" class="nav-link" data-i18n="nav.experience"><i class="fas fa-briefcase"></i> <span>Experience</span></a></li>
+                    <li><a href="#education" class="nav-link" data-i18n="nav.education"><i class="fas fa-graduation-cap"></i> <span>Education</span></a></li>
+                    <li><a href="#skills" class="nav-link" data-i18n="nav.skills"><i class="fas fa-code"></i> <span>Skills</span></a></li>
+                    <li><a href="#projects" class="nav-link" data-i18n="nav.projects"><i class="fas fa-laptop-code"></i> <span>Projects</span></a></li>
+                    <li><a href="#contact" class="nav-link" data-i18n="nav.contact"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
+                    <li><a href="assets/FranciscoRibeiro-CV.pdf" target="_blank" class="nav-link">
+                        <i class="fas fa-file-alt"></i> <span data-i18n="nav.cv">Resume / CV</span>
+                      </a></li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="social-links">
+                    <a href="https://github.com/franciscoribeiro2003" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/franciscoribeiro2003" target="_blank" class="social-link" id="linkedin-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.instagram.com/francisco_ribeiro.jpg" target="_blank" class="social-link" id="instagram-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+                
+                <div class="sidebar-actions">
+                    <button id="language-toggle" class="btn-icon">
+                        <span class="current-lang">EN</span>
+                    </button>
+                    <button id="theme-toggle" class="btn-icon">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- About Section -->
+        <section id="about" class="section">
+            <h2 class="section-title" data-i18n="about.title">About Me</h2>
+            <div class="about-content">
+                <div id="about-text"></div>
+                <div class="about-actions">
+                    <a href="assets/FranciscoRibeiro-CV.pdf" target="_blank" class="btn btn-primary btn-with-icon" data-i18n="about.downloadCV">
+                        <i class="fas fa-download"></i> <span>Download CV</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <h2 class="section-title" data-i18n="experience.title">Experience</h2>
+            <div class="timeline" id="experience-timeline"></div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="section">
+            <h2 class="section-title" data-i18n="education.title">Education</h2>
+            <div class="timeline" id="education-timeline"></div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <h2 class="section-title" data-i18n="skills.title">Skills</h2>
+            <div class="skills-grid" id="skills-container"></div>
+        </section>
+
+        <!-- Languages Section -->
+        <section id="languages" class="section">
+            <h2 class="section-title" data-i18n="languages.title">Languages</h2>
+            <div class="languages-container" id="languages-container"></div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <h2 class="section-title" data-i18n="projects.title">Projects</h2>
+            <div class="projects-grid" id="projects-grid"></div>
+        </section>
+
+        <!-- Volunteering Section -->
+        <section id="volunteering" class="section">
+            <h2 class="section-title" data-i18n="volunteering.title">Volunteering</h2>
+            <div class="timeline" id="volunteering-timeline"></div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title" data-i18n="contact.title">Contact Me</h2>
+            <div class="contact-container">
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name" data-i18n="contact.name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-i18n="contact.email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-i18n="contact.message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" data-i18n="contact.send">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span id="contact-email">franciscoribeiro2003@gmai.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="contact-location">Porto, Portugal</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>&copy; <span id="current-year">2025</span> Francisco Ribeiro. <span data-i18n="footer.rights">All rights reserved.</span></p>
+        </footer>
+    </main>
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>

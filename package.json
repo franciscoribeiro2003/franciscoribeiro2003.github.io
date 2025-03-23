@@ -1,0 +1,15 @@
+{
+  "name": "dynamic-portfolio",
+  "version": "1.0.0",
+  "description": "Dynamic portfolio website with PocketBase integration",
+  "scripts": {
+    "start": "serve .",
+    "deploy": "gh-pages -d ."
+  },
+  "author": "franciscoribeiro2003",
+  "license": "MIT",
+  "devDependencies": {
+    "gh-pages": "^6.0.0",
+    "serve": "^14.2.1"
+  }
+}
