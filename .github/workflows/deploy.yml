@@ -1,0 +1,33 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create directories
+        run: |
+          mkdir -p js
+          mkdir -p css
+          mkdir -p images
+
+      - name: Generate config file with secrets
+        run: |
+          echo "// Auto-generated config file - DO NOT EDIT" > js/config.js
+          echo "window.APP_CONFIG = {" >> js/config.js
+          echo "  pocketbaseUrl: '${{ secrets.POCKETBASE_URL }}'" >> js/config.js
+          echo "};" >> js/config.js
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: .  # The folder containing our static files
+          branch: gh-pages  # The branch the action should deploy to
+          clean: true  # Automatically remove deleted files from the deploy branch
