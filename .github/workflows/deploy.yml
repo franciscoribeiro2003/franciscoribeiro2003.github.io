@@ -24,6 +24,7 @@ jobs:
           echo "window.APP_CONFIG = {" >> js/config.js
           echo "  pocketbaseUrl: '${{ secrets.POCKETBASE_URL }}'" >> js/config.js
           echo "};" >> js/config.js
+          cat js/config.js | grep -v pocketbase  # Print config without revealing the URL
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

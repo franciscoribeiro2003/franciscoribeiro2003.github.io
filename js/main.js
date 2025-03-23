@@ -1,5 +1,5 @@
 // Initialize PocketBase client
-const pb = new PocketBase(window.APP_CONFIG?.pocketbaseUrl);
+const pb = new PocketBase(window.APP_CONFIG?.pocketbaseUrl || 'Not defined');
 
 // Global state
 const state = {
