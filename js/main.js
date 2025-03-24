@@ -435,7 +435,7 @@ function handleContactFormSubmit(e) {
     formData.append('email', email);
     formData.append('message', message);
     
-    fetch('https://formsubmit.co/franciscorib2003@gmail.com', {
+    fetch('https://formsubmit.co/bab6303286706dd308edeea3a1e7a5f0', {
         method: 'POST',
         body: formData
     })
