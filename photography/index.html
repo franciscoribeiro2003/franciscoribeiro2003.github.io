@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-updated="Sept 2026">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- seo:start -->
+  <!-- seo:end -->
+  <!-- jsonld:start -->
+  <!-- jsonld:end -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.6.0/maplibre-gl.min.css">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("fr:theme");
+        if (t && t !== "system") document.documentElement.setAttribute("data-theme", t);
+        var l = localStorage.getItem("fr:lang");
+        if (l) document.documentElement.lang = l;
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/js/config.js"></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="page">
+    <main id="main" class="stack" style="gap: var(--space-40)">
+
+      <div class="photo-head">
+        <p class="page__intro" data-i18n="photography.intro">
+          Photographs, kept where they were taken. Mostly light, water and empty roads.
+        </p>
+        <div class="segmented" id="view-modes" role="group" aria-label="Browse by"></div>
+      </div>
+
+      <div class="map-strip">
+        <div id="photo-map"></div>
+        <p class="globe-overlay globe-overlay--caption t-mono-xs muted" id="photo-count">—</p>
+      </div>
+
+      <div class="stack" id="photo-groups" style="gap: var(--space-48)"></div>
+    </main>
+  </div>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph" hidden>
+    <div>
+      <img id="lightbox-img" src="" alt="">
+      <p class="lightbox__meta" id="lightbox-meta"></p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.6.0/maplibre-gl.js"></script>
+  <script type="module" src="/js/pages/photography.js"></script>
+</body>
+</html>

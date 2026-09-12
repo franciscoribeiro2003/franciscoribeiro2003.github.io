@@ -26,3 +26,16 @@ yarn-error.log*
 *.swo
 
 js/config.js
+# GPX lives outside this repo (../fribeiro/bikepacking_gpx), and the simplified
+# geometry lives in PocketBase. No content of any kind is committed here.
+gpx/
+data/
+
+# Generated at deploy time by tools/prerender.mjs: one shell per post, with a
+# baked <head> so each entry has its own indexable URL. Content still comes
+# from PocketBase at runtime — these are shells, not content — but they are
+# derived files and do not belong in git.
+/blog/*/
+/projects/*/
+sitemap.xml
+robots.txt

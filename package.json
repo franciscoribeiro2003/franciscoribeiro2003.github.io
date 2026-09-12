@@ -1,15 +1,17 @@
 {
-  "name": "dynamic-portfolio",
-  "version": "1.0.0",
-  "description": "Dynamic portfolio website with PocketBase integration",
+  "name": "franciscoribeiro-site",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Static frontend on GitHub Pages. Reads content from PocketBase at runtime; only the <head> SEO block is generated at build time.",
+  "type": "module",
   "scripts": {
-    "start": "serve .",
-    "deploy": "gh-pages -d ."
+    "dev": "node tools/prerender.mjs --lenient; node tools/dev-server.mjs",
+    "prerender": "node tools/prerender.mjs",
+    "seo:reset": "node tools/seo-reset.mjs",
+    "seo:check": "node tools/seo-reset.mjs --check",
+    "clean": "node tools/seo-reset.mjs --generated",
+    "serve": "node tools/dev-server.mjs"
   },
   "author": "franciscoribeiro2003",
-  "license": "MIT",
-  "devDependencies": {
-    "gh-pages": "^6.0.0",
-    "serve": "^14.2.1"
-  }
+  "license": "MIT"
 }

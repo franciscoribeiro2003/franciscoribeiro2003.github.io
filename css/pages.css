@@ -1,0 +1,718 @@
+/* ==========================================================================
+   Page-specific layouts
+   ========================================================================== */
+
+/* --- Map: journal + globe split ------------------------------------------ */
+
+.map-split {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 460px minmax(0, 1fr);
+  gap: var(--space-24);
+}
+
+.journal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  padding: var(--space-28, 28px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.journal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trip-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.trip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-align: left;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.trip:hover {
+  background: var(--surface-alt);
+}
+.trip[aria-current="true"] {
+  background: var(--surface-alt);
+}
+.trip__marker {
+  flex: none;
+  width: 2px;
+  height: 26px;
+  border-radius: 1px;
+  background: var(--border);
+}
+/* The marker colour is set inline from the trip's transport mode. */
+.trip:not([aria-current="true"]) .trip__marker {
+  opacity: 0.45;
+}
+.trip__body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  /* The name and the year/stages line were touching. */
+  gap: 3px;
+}
+.trip__name {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.trip[aria-current="true"] .trip__name {
+  color: var(--text-primary);
+}
+.trip__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.stats {
+  display: flex;
+  gap: var(--space-24);
+  padding-block: var(--space-4);
+}
+.stat__value {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.stat__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.stages {
+  display: flex;
+  flex-direction: column;
+}
+.stage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  width: 100%;
+  padding-block: 10px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+.stage__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+.stage[aria-current="true"] .stage__num {
+  color: var(--accent);
+}
+.stage__name {
+  flex: 1;
+  min-width: 0;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.stage[aria-current="true"] .stage__name {
+  color: var(--text-primary);
+}
+.stage__meta {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.globe-panel {
+  position: relative;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+}
+#globe {
+  position: absolute;
+  inset: 0;
+}
+
+/* Overlays sit on satellite imagery, which is dark in both themes — so they
+   take fixed light colours rather than the theme's text tokens. */
+.globe-overlay {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+.globe-overlay .muted,
+.globe-overlay .globe-caption__meta {
+  color: rgba(255, 255, 255, 0.68);
+}
+.globe-overlay--caption {
+  top: var(--space-24);
+  left: var(--space-24);
+}
+.globe-overlay--hint {
+  bottom: var(--space-24);
+  left: var(--space-24);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+.globe-overlay--controls {
+  bottom: var(--space-24);
+  right: var(--space-24);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.globe-overlay--controls button {
+  width: 34px;
+  height: 32px;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+.globe-overlay--controls button + button {
+  border-top: 1px solid var(--border);
+}
+
+.globe-caption__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+}
+.globe-caption__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+/* MapLibre's own chrome, toned down to match */
+.maplibregl-ctrl-attrib {
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+/**
+ * Map on small screens: globe on top, journal as a sheet below it.
+ *
+ * A flex column rather than a grid with sized rows. The grid version gave the
+ * first row 60vh and the second `auto` — but the journal comes first in the
+ * source, so it took the tall row and the globe got `auto`. `#globe` is
+ * `position: absolute`, so it contributes no height to its panel, and `auto`
+ * collapsed the whole globe to nothing. It was rendering the entire time, in a
+ * box zero pixels tall.
+ *
+ * `order` puts the globe first without moving it in the DOM, so the journal
+ * still comes first for a screen reader and for keyboard order — the trip list
+ * is the useful thing to reach, and the globe is not operable that way.
+ */
+@media (max-width: 1000px) {
+  .page--app {
+    height: auto;
+    overflow: visible;
+  }
+  .map-split {
+    display: flex;
+    flex-direction: column;
+  }
+  .globe-panel {
+    order: -1;
+    /* An explicit height: nothing inside can provide one. */
+    height: 60vh;
+    min-height: 320px;
+    flex: none;
+  }
+  .journal {
+    overflow: visible;
+    border-radius: var(--radius-lg);
+  }
+  /* "drag to rotate · scroll to zoom" is desktop advice — you pinch on a
+     phone — and at this width it lands on top of the tile attribution. */
+  .globe-overlay--hint {
+    display: none;
+  }
+}
+
+/* --- Photography --------------------------------------------------------- */
+
+.photo-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-40);
+  flex-wrap: wrap;
+}
+
+.segmented {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.segmented button {
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-md);
+  color: var(--text-muted);
+}
+.segmented button[aria-pressed="true"] {
+  background: var(--bg);
+  color: var(--text-primary);
+}
+
+.map-strip {
+  position: relative;
+  height: 280px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+}
+#photo-map {
+  position: absolute;
+  inset: 0;
+}
+
+.photo-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+.photo-group__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+  flex-wrap: wrap;
+}
+.photo-group__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-12);
+  flex-wrap: wrap;
+}
+.photo-group__coords {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.photo-row {
+  display: grid;
+  gap: var(--space-16);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+}
+.photo-row[data-emphasis="first"] {
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-auto-flow: row;
+}
+
+.photo {
+  position: relative;
+  border-radius: 10px;
+  background: var(--surface-alt);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease);
+}
+.photo:hover img {
+  transform: scale(1.02);
+}
+
+@media (max-width: 800px) {
+  .photo-row,
+  .photo-row[data-emphasis="first"] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-flow: row;
+  }
+  .map-strip {
+    height: 220px;
+  }
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: grid;
+  place-items: center;
+  padding: var(--space-24);
+  background: var(--scrim);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease);
+}
+.lightbox[data-open] {
+  opacity: 1;
+  pointer-events: auto;
+}
+.lightbox img {
+  max-width: 100%;
+  max-height: 82vh;
+  border-radius: var(--radius-sm);
+}
+.lightbox__meta {
+  margin-top: var(--space-12);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+/* --- Projects ------------------------------------------------------------ */
+
+.explorer {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: var(--space-40);
+  align-items: start;
+}
+
+.explorer__side {
+  padding: var(--space-20);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: sticky;
+  top: var(--space-24);
+}
+
+.explorer__detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  padding: var(--space-40);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.crumb {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.detail__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+.detail__meta .sep {
+  color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+  .explorer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-24);
+  }
+  .explorer__side {
+    position: static;
+  }
+  .explorer__detail {
+    padding: var(--space-24) var(--space-20);
+  }
+}
+
+/* --- Blog ---------------------------------------------------------------- */
+
+.reading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  max-width: var(--reading-max);
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+}
+
+.post {
+  display: flex;
+  gap: var(--space-32);
+  align-items: flex-start;
+  padding-block: var(--space-28, 28px);
+  border-top: 1px solid var(--border);
+}
+.post__date {
+  flex: none;
+  width: 100px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  padding-top: 4px;
+}
+.post__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-width: 0;
+}
+.post__title {
+  transition: color var(--dur-fast) var(--ease);
+}
+.post:hover .post__title {
+  color: var(--accent);
+}
+.post__tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  padding-top: 2px;
+}
+
+@media (max-width: 700px) {
+  .post {
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  .post__date {
+    width: auto;
+    padding-top: 0;
+  }
+}
+
+/* --- expanded stage: description, photos, elevation ---------------------- */
+
+.stage {
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.stage:hover {
+  background: var(--surface-alt);
+}
+
+.stage__detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-12) 0 var(--space-16) var(--space-32);
+  border-top: 1px dashed var(--border);
+}
+
+.stage__photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 6px;
+}
+.stage__photos img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--surface-alt);
+}
+
+.stage__profile {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-8);
+}
+.sparkline {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+}
+.sparkline__area {
+  fill: var(--accent);
+  fill-opacity: 0.14;
+}
+.sparkline__line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* --- Entry cards (the projects index) ------------------------------------ */
+
+.entry-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+.entry-card {
+  display: flex;
+  gap: var(--space-24);
+  align-items: flex-start;
+  padding-block-end: var(--space-32);
+  border-bottom: 1px solid var(--border);
+}
+.entry-card:last-child {
+  border-bottom: 0;
+  padding-block-end: 0;
+}
+
+.entry-card__cover {
+  flex: none;
+  width: 148px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+}
+.entry-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The whole block is the link, but it must not look like one. */
+.entry-card__hit,
+.post__hit {
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+  flex: 1;
+  display: block;
+}
+.entry-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-width: 0;
+}
+.entry-card__title {
+  transition: color var(--dur-fast) var(--ease);
+}
+.entry-card:hover .entry-card__title,
+.entry-card__hit:focus-visible .entry-card__title {
+  color: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .entry-card {
+    flex-direction: column;
+  }
+  .entry-card__cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* --- A single entry (a post or a project page) --------------------------- */
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-20);
+}
+
+.crumb__link {
+  color: inherit;
+  text-decoration: none;
+}
+.crumb__link:hover {
+  color: var(--accent);
+}
+
+.entry__title {
+  text-wrap: balance;
+}
+
+.entry__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+.entry__date {
+  white-space: nowrap;
+}
+.entry__tags {
+  display: flex;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.entry__lede {
+  /* The description, set apart from the body it introduces. */
+  color: var(--text-secondary);
+}
+
+.entry__cover {
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+}
+/**
+ * A cover is a header, not a plate. Covers are whatever shape the source
+ * image happened to be — a tall screenshot rendered at full column width was
+ * 617px of image before a word of prose, which pushes the body off the first
+ * screen entirely. So the box is capped and the image crops to fill it.
+ */
+.entry__cover img {
+  display: block;
+  width: 100%;
+  max-height: 380px;
+  object-fit: cover;
+  object-position: center top;
+}
+@media (max-width: 700px) {
+  .entry__cover img {
+    max-height: 240px;
+  }
+}
+
+.entry__link,
+.entry__back {
+  margin: 0;
+}
+.entry__back {
+  padding-block-start: var(--space-24);
+  border-top: 1px solid var(--border);
+}
