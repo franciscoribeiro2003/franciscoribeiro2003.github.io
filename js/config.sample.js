@@ -6,10 +6,6 @@ window.APP_CONFIG = {
   // pages render their static shell and nothing else.
   pocketbaseUrl: "",
 
-  // Public base URL for images in Cloud Storage, e.g.
-  // "https://storage.googleapis.com/<bucket>". Leave empty to use paths as-is.
-  mediaBaseUrl: "",
-
   // Satellite raster tiles. null falls back to Esri World Imagery, which needs
   // no key. Set an array of URL templates to use MapTiler, Mapbox, etc.
   satelliteTiles: null,
