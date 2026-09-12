@@ -67,6 +67,19 @@ jobs:
           find . -name '*.html' -not -path './node_modules/*' \
             -exec sed -i "s/data-updated=\"[^\"]*\"/data-updated=\"$DATE\"/g" {} +
 
+      # The deploy action commits the folder to `gh-pages` with `git add`, and
+      # it copies `.gitignore` along with everything else — so the repo's
+      # ignore rules decide what reaches the live site. Every generated file is
+      # deliberately gitignored (that is how the repo stays free of content),
+      # which meant js/config.js, sitemap.xml, robots.txt and every per-post
+      # page were silently missing from production while the tracked files
+      # published fine.
+      #
+      # This replaces it, in the CI checkout only, with the two rules that
+      # genuinely must never be published. Nothing here touches the repository.
+      - name: Let the generated files reach the published branch
+        run: printf '.DS_Store\nnode_modules/\n' > .gitignore
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
