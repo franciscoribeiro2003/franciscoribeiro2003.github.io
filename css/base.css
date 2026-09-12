@@ -1,0 +1,214 @@
+/* ==========================================================================
+   Base — reset, typography ramp, page shell
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: var(--space-12) var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.skip-link:focus {
+  left: var(--space-16);
+  top: var(--space-16);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- type ramp ----------------------------------------------------------- */
+
+.t-h1 {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+}
+.t-h2 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.t-h3 {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: var(--leading-snug);
+}
+.t-body-l {
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
+}
+.t-body {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+.t-body-s {
+  font-size: var(--text-md);
+  line-height: 1.55;
+}
+.t-caps {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  line-height: var(--leading-snug);
+}
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+.t-mono-s {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.t-mono-xs {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+.secondary {
+  color: var(--text-secondary);
+}
+.accent {
+  color: var(--accent);
+}
+
+/* --- page shell ---------------------------------------------------------- */
+
+.page {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding: var(--space-40) var(--page-pad) var(--space-48);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-48);
+}
+
+/* App-shaped pages (the map) fill the viewport instead of scrolling. */
+.page--app {
+  height: 100vh;
+  height: 100dvh;
+  padding-bottom: var(--space-40);
+  gap: var(--space-28, 28px);
+  overflow: hidden;
+}
+
+.page__intro {
+  max-width: 62ch;
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+hr.rule {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* --- motion preferences -------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

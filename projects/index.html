@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-updated="Sept 2026">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- seo:start -->
+  <!-- seo:end -->
+  <!-- jsonld:start -->
+  <!-- jsonld:end -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("fr:theme");
+        if (t && t !== "system") document.documentElement.setAttribute("data-theme", t);
+        var l = localStorage.getItem("fr:lang");
+        if (l) document.documentElement.lang = l;
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/js/config.js"></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="page">
+    <main id="main" class="stack" style="gap: var(--space-48)">
+      <p class="page__intro" data-i18n="projects.intro">
+        Software engineering work — mostly backends, spatial data and, lately, language
+        models that have to be right about numbers.
+      </p>
+
+      <div class="explorer">
+        <nav class="explorer__side" aria-label="Project files">
+          <div class="tree" id="project-tree"></div>
+        </nav>
+        <article class="explorer__detail" id="project-detail" aria-live="polite"></article>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="/js/pages/projects.js"></script>
+</body>
+</html>

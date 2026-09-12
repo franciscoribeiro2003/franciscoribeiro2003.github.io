@@ -1,0 +1,364 @@
+/* ==========================================================================
+   Guestbook — a notebook that opens over the page
+   ========================================================================== */
+
+.gb {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: var(--space-24);
+  background: var(--scrim);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease);
+}
+.gb[data-open] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* The book hinges open from the top edge. */
+.gb__book {
+  position: relative;
+  display: flex;
+  width: min(880px, 100%);
+  border-radius: 6px;
+  box-shadow: var(--shadow-lg);
+  transform-origin: top center;
+  transform: perspective(1600px) rotateX(-24deg) translateY(-14px);
+  opacity: 0;
+  transition: transform var(--dur-slow) var(--ease),
+    opacity var(--dur-slow) var(--ease);
+}
+.gb[data-open] .gb__book {
+  transform: perspective(1600px) rotateX(0deg) translateY(0);
+  opacity: 1;
+}
+
+.gb__page {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  aspect-ratio: 420 / 560;
+  background: var(--paper);
+  overflow: hidden;
+}
+.gb__page:first-child {
+  border-radius: 6px 0 0 6px;
+}
+.gb__page:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+/* Gutter shading where the two pages meet */
+.gb__spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 40px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.13) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.gb__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+
+/* --- a signed page: the scanned drawing over the paper ------------------- */
+
+/**
+ * Entries are transparent PNGs, so the paper showing through is the notebook's
+ * own — the same in light and dark, because `--paper` does not change.
+ */
+.gb__scan {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* A hand-drawn page is a picture, not a photo: never crop it, and never
+     let a decode failure leave a stretched box. */
+  background: transparent;
+}
+
+.gb__folio {
+  position: absolute;
+  left: var(--space-24);
+  right: var(--space-24);
+  bottom: var(--space-16);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-12);
+  pointer-events: none;
+}
+.gb__signed {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+}
+.gb__pageno {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  opacity: 0.55;
+}
+
+.gb__page--blank::after {
+  /* A ruled ghost, so an empty right-hand page still reads as paper. */
+  content: "";
+  position: absolute;
+  inset: 12% 14%;
+  background: repeating-linear-gradient(
+    var(--paper) 0 30px,
+    var(--paper-rule) 30px 31px
+  );
+  opacity: 0.32;
+}
+
+/* --- the page being written --------------------------------------------- */
+
+.gb__page--mine {
+  /* Set by JS from the rendered page height so the textarea matches the
+     canvas exactly — see sizeCanvas(). */
+  --gb-text: 26px;
+  --gb-line: 1.26;
+  cursor: crosshair;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pencil) 26%, transparent);
+}
+
+.gb__ink {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none; /* the pen owns the gesture; no scroll-away mid-stroke */
+}
+
+.gb__boxes {
+  position: absolute;
+  inset: 0;
+  /**
+   * Inert while drawing. The pen has to reach the whole page, text included,
+   * so a box only becomes clickable in the text tool — or while it is being
+   * edited, which must stay reachable whatever the tool.
+   */
+  pointer-events: none;
+}
+
+.gb__box {
+  position: absolute;
+  min-height: calc(var(--gb-text) * var(--gb-line));
+  border-radius: 3px;
+}
+.gb__boxes[data-tool="text"] .gb__box,
+.gb__box--editing {
+  pointer-events: auto;
+}
+.gb__boxes[data-tool="text"] .gb__box {
+  outline: 1px dashed color-mix(in srgb, var(--pencil) 55%, transparent);
+  outline-offset: 3px;
+  cursor: text;
+}
+
+.gb__boxinput {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  resize: none;
+  overflow: hidden;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-hand);
+  font-size: var(--gb-text);
+  line-height: var(--gb-line);
+  outline: none;
+}
+
+.gb__boxgrip,
+.gb__boxdel {
+  position: absolute;
+  top: calc(var(--gb-text) * -1);
+  width: 22px;
+  height: 22px;
+  display: none;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid color-mix(in srgb, var(--pencil) 50%, transparent);
+  color: var(--ink-soft);
+  font-size: 11px;
+  line-height: 1;
+}
+.gb__boxgrip { left: -6px; cursor: grab; touch-action: none; }
+.gb__boxdel  { right: -6px; cursor: pointer; }
+.gb__boxgrip:active { cursor: grabbing; }
+
+.gb__boxes[data-tool="text"] .gb__boxgrip,
+.gb__boxes[data-tool="text"] .gb__boxdel,
+.gb__box--editing .gb__boxgrip,
+.gb__box--editing .gb__boxdel {
+  display: grid;
+}
+
+/* --- controls ------------------------------------------------------------ */
+
+.gb__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin-top: var(--space-20);
+}
+
+.gb__nav {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.gb__nav:hover:not(:disabled) { background: rgba(255, 255, 255, 0.24); }
+.gb__nav:disabled { opacity: 0.3; cursor: default; }
+
+.gb__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-12);
+  margin-top: var(--space-12);
+}
+.gb__toolrow,
+.gb__signrow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.gb__tool {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-size: 1rem;
+  transition: background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+.gb__tool:hover:not(:disabled) { background: rgba(255, 255, 255, 0.2); }
+.gb__tool[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.gb__tool:disabled { opacity: 0.32; cursor: default; }
+.gb__tool--warn:hover:not(:disabled) {
+  border-color: #ff6b5e;
+  color: #ff9d94;
+}
+
+.gb__name {
+  width: 190px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-family: var(--font-hand);
+  font-size: 1.1rem;
+}
+.gb__name::placeholder { color: rgba(255, 255, 255, 0.45); }
+
+.gb__submit {
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: #06231f;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+.gb__submit:disabled { opacity: 0.35; cursor: default; }
+
+.gb__status {
+  margin-top: var(--space-12);
+  min-height: 1.2em;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+}
+.gb__status--bad { color: #ff9d94; }
+
+.gb__close {
+  position: absolute;
+  top: var(--space-24);
+  right: var(--space-24);
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  color: rgba(255, 255, 255, 0.7);
+}
+.gb__close:hover { color: #fff; }
+
+/* --- narrow screens ------------------------------------------------------ */
+
+@media (max-width: 760px) {
+  /**
+   * The spread stacks instead of sitting side by side.
+   *
+   * Halving a 375px screen leaves a drawing area about 164px wide, which is
+   * not a page anyone can write on. Stacking gives each page the full width;
+   * the overlay scrolls to reach the second one.
+   */
+  .gb {
+    place-items: start center;
+    overflow-y: auto;
+  }
+  .gb__book {
+    width: 100%;
+    flex-direction: column;
+  }
+  .gb__page {
+    border-radius: 6px;
+    /* `flex: 1 1 0` sizes the main axis, which is the height once the book is
+       a column — it collapsed every page to zero. Let aspect-ratio drive it. */
+    flex: none;
+    width: 100%;
+  }
+  /* An empty page is not worth a screen of scrolling. */
+  .gb__page--blank { display: none; }
+  .gb__spine { display: none; }
+  .gb__name { width: 150px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gb,
+  .gb__book { transition: none; }
+}

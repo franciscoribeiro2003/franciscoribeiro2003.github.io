@@ -1,0 +1,238 @@
+/**
+ * Typography for a rendered markdown body.
+ *
+ * Loaded only by the generated per-post pages — the list pages never render a
+ * body, so they never pay for this.
+ *
+ * The rules are scoped under `.markdown` and target bare elements, because the
+ * markup comes from the parser and carries no classes of its own. Only the
+ * wrappers `js/core/markdown.js` adds are addressed by class.
+ */
+
+.markdown {
+  display: flow-root;
+  color: var(--text-secondary);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+}
+
+/* Vertical rhythm from a single rule, so every block type spaces the same. */
+.markdown > * + * {
+  margin-block-start: var(--space-20);
+}
+
+/* --- headings ------------------------------------------------------------- */
+
+/* The page's own <h1> is the title; the body starts at h2 (core/markdown.js
+   demotes every heading by one to keep a single h1 per document). */
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+.markdown > h2 + *,
+.markdown > h3 + *,
+.markdown > h4 + * {
+  margin-block-start: var(--space-12);
+}
+.markdown > * + h2 {
+  margin-block-start: var(--space-40);
+}
+.markdown > * + h3,
+.markdown > * + h4 {
+  margin-block-start: var(--space-32);
+}
+
+.markdown h2 { font-size: var(--text-xl); }
+.markdown h3 { font-size: var(--text-lg); }
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+}
+
+/* --- inline --------------------------------------------------------------- */
+
+.markdown strong { color: var(--text-primary); font-weight: 600; }
+.markdown em { font-style: italic; }
+.markdown del { color: var(--text-muted); }
+
+.markdown a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  transition: text-decoration-color var(--dur-fast) var(--ease);
+}
+.markdown a:hover {
+  text-decoration-color: var(--accent);
+}
+/* A quiet outbound marker, so a link that leaves the site says so. */
+.markdown a.markdown__link--external::after {
+  content: "↗";
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  margin-inline-start: 0.25em;
+  text-decoration: none;
+  opacity: 0.65;
+}
+
+/* --- lists ---------------------------------------------------------------- */
+
+.markdown ul,
+.markdown ol {
+  padding-inline-start: var(--space-24);
+}
+.markdown li + li {
+  margin-block-start: var(--space-8);
+}
+.markdown li::marker {
+  color: var(--text-muted);
+}
+.markdown li > ul,
+.markdown li > ol {
+  margin-block-start: var(--space-8);
+}
+/* Task lists carry their own checkbox, so the bullet is noise. */
+.markdown li.markdown__task {
+  list-style: none;
+  margin-inline-start: calc(var(--space-24) * -1);
+  padding-inline-start: var(--space-24);
+  position: relative;
+}
+.markdown li.markdown__task > input[type="checkbox"] {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.3em;
+  accent-color: var(--accent);
+}
+
+/* --- code ----------------------------------------------------------------- */
+
+.markdown code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 0.12em 0.36em;
+  /* A long identifier must break rather than widen the column. */
+  overflow-wrap: anywhere;
+}
+.markdown pre.markdown__pre {
+  /* Wide code scrolls inside its own box; the page never scrolls sideways. */
+  overflow-x: auto;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-16);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+.markdown pre.markdown__pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  overflow-wrap: normal;
+  white-space: pre;
+}
+
+/* --- quotes and rules ----------------------------------------------------- */
+
+.markdown blockquote {
+  border-inline-start: 2px solid var(--accent);
+  padding-inline-start: var(--space-16);
+  color: var(--text-muted);
+  font-style: italic;
+}
+.markdown blockquote > * + * {
+  margin-block-start: var(--space-12);
+}
+.markdown hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin-block: var(--space-32);
+}
+
+/* --- tables --------------------------------------------------------------- */
+
+.markdown .markdown__table {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.markdown table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--text-sm);
+}
+.markdown th,
+.markdown td {
+  text-align: start;
+  padding: var(--space-12) var(--space-16);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.markdown thead th {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--surface-alt);
+  white-space: nowrap;
+}
+.markdown tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* --- images --------------------------------------------------------------- */
+
+/**
+ * Body images are external URLs — nothing is uploaded with a post. So they are
+ * sized defensively: an unknown original must never widen the column, and the
+ * reserved box keeps the text from jumping when a slow third-party image
+ * finally lands.
+ */
+.markdown img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+}
+.markdown figure.markdown__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+.markdown figure.markdown__figure img {
+  width: 100%;
+}
+.markdown figcaption {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.markdown details {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-12) var(--space-16);
+}
+.markdown summary {
+  cursor: pointer;
+  color: var(--text-primary);
+  font-weight: 500;
+}
