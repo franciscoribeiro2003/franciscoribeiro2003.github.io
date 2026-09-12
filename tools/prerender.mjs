@@ -434,21 +434,39 @@ async function loadFromBackend() {
     if (!res.ok) throw new Error(`${collection}: ${res.status}`);
     return (await res.json()).items || [];
   };
+  /**
+   * Collections that may legitimately be empty.
+   *
+   * `webpage` and `page_seo` are **not** among them, and that distinction is
+   * the whole point. Every collection used to go through this, so a backend
+   * that answered with errors produced empty arrays, `loadFromBackend` never
+   * threw, and the retry-and-fail guard below could not fire. The build then
+   * published `<title></title>` and an empty description to the live site —
+   * which is exactly what happened while the backend was failing to start.
+   */
   const optional = (c, q) => get(c, q).catch(() => []);
 
-  const [webpage, experience, education, posts, photos, seo, languages, trips, stages] =
+  const [webpage, seo, experience, education, posts, photos, languages, trips, stages] =
     await Promise.all([
-      optional("webpage"),
+      // Required: the site's identity and every page's title come from these.
+      // If they cannot be read there is nothing worth publishing, so let the
+      // rejection propagate and fail the deploy.
+      get("webpage"),
+      get("page_seo"),
       optional("experience", "&expand=positions"),
       optional("education", "&sort=-start"),
       // One collection for the blog and the projects, as in the browser.
       optional("posts", "&sort=order,-date&filter=(published=true)"),
       optional("photos", "&filter=(published=true)"),
-      optional("page_seo"),
       optional("spoken_languages"),
       optional("trips", "&sort=order&filter=(published=true)"),
       optional("stages", "&sort=order"),
     ]);
+
+  // A reachable backend that returns no `webpage` record is as useless as an
+  // unreachable one: the name, job title, CV and social image all come from it.
+  if (!webpage.length) throw new Error("webpage: no record");
+  if (!seo.length) throw new Error("page_seo: no records");
 
   const allPosts = shapePosts(posts);
 
