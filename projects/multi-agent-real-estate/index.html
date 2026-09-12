@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+  Template for a single post's page.
+
+  `tools/prerender.mjs` copies this once per published post to
+  /blog/<slug>/index.html and /projects/<slug>/index.html, replacing only the
+  seo: and jsonld: blocks and the two data- attributes on <body>. The body
+  markup below is a shell — the title, the cover and the markdown are fetched
+  from PocketBase at runtime, like every other page on this site.
+
+  Per-post SEO is the whole reason these files exist. Meta tags have to be in
+  the HTML a crawler receives, and a crawler receives one file per URL, so a
+  post that wants its own title and description needs its own URL. The pages
+  are generated at deploy time and never committed.
+-->
+<html lang="en" data-updated="Sep 2026">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- seo:start -->
+  <title>A Multi-Agent Framework Powered by Language Models for Real Estate Intelligence Analysis — Francisco Ribeiro</title>
+  <meta name="description" content="MSc dissertation · FEUP &amp; Confidencial Imobiliário · 2025 — 2026">
+  <meta name="author" content="Francisco Ribeiro">
+  <meta name="google-site-verification" content="nYfTtdcCCo_yB2H9zO1CpeC_mUDFvOcmXhnIMZ2fJEA">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://franciscoribeiro2003.github.io/projects/multi-agent-real-estate/">
+  <link rel="icon" href="/favicon.ico?v=692518ce" sizes="16x16 32x32 48x48">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Francisco Ribeiro">
+  <meta property="og:title" content="A Multi-Agent Framework Powered by Language Models for Real Estate Intelligence Analysis — Francisco Ribeiro">
+  <meta property="og:description" content="MSc dissertation · FEUP &amp; Confidencial Imobiliário · 2025 — 2026">
+  <meta property="og:url" content="https://franciscoribeiro2003.github.io/projects/multi-agent-real-estate/">
+  <meta property="og:image" content="https://pocketbase-cloudrun-761697169023.europe-southwest1.run.app/api/files/d84yh707iv0x3tv/9wdwdk9pun2yys0/thesis_cover_D43YXp0vYp.png?thumb=1600x0">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:locale:alternate" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="A Multi-Agent Framework Powered by Language Models for Real Estate Intelligence Analysis — Francisco Ribeiro">
+  <meta name="twitter:description" content="MSc dissertation · FEUP &amp; Confidencial Imobiliário · 2025 — 2026">
+  <meta name="twitter:image" content="https://pocketbase-cloudrun-761697169023.europe-southwest1.run.app/api/files/d84yh707iv0x3tv/9wdwdk9pun2yys0/thesis_cover_D43YXp0vYp.png?thumb=1600x0">
+  <!-- seo:end -->
+  <!-- jsonld:start -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://franciscoribeiro2003.github.io/#person",
+        "name": "Francisco Ribeiro",
+        "url": "https://franciscoribeiro2003.github.io/",
+        "jobTitle": "Software Engineer",
+        "description": "Software engineer building backend systems, data pipelines and LLM-powered features.",
+        "image": "https://pocketbase-cloudrun-761697169023.europe-southwest1.run.app/api/files/g00cy233vznj8ws/1a3s93a5usxkpj7/img_cv_7uz0CavTOL.jpg",
+        "email": "mailto:franciscorib2003@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Porto",
+          "addressCountry": "PT"
+        },
+        "sameAs": [
+          "https://github.com/franciscoribeiro2003",
+          "https://www.linkedin.com/in/franciscoribeiro2003",
+          "https://www.instagram.com/francisco_ribeiro.jpg"
+        ],
+        "knowsLanguage": [
+          "Portuguese",
+          "English"
+        ],
+        "alumniOf": [
+          {
+            "@type": "EducationalOrganization",
+            "name": "Faculty of Engineering, University of Porto (FEUP)"
+          },
+          {
+            "@type": "EducationalOrganization",
+            "name": "Faculty of Sciences, University of Porto (FCUP)"
+          }
+        ],
+        "worksFor": [
+          {
+            "@type": "Organization",
+            "name": "Confidencial Imobiliário"
+          }
+        ],
+        "knowsAbout": [
+          "Python",
+          "JavaScript",
+          "Java",
+          "SQL",
+          "LangGraph",
+          "LLM agents and fine-tuning",
+          "RAG and information retrieval",
+          "NLP",
+          "Evaluation pipelines and benchmarking",
+          "pandas",
+          "Django",
+          "Django REST Framework",
+          "Celery",
+          "Redis",
+          "PostgreSQL",
+          "REST APIs",
+          "PostGIS",
+          "GeoServer",
+          "Leaflet",
+          "Spatial and temporal data modelling",
+          "CAS single sign-on",
+          "OAuth 2.0",
+          "Stripe",
+          "Docker",
+          "Git",
+          "Linux",
+          "Google Cloud Platform"
+        ]
+      },
+      {
+        "@type": "CreativeWork",
+        "@id": "https://franciscoribeiro2003.github.io/projects/multi-agent-real-estate/#work",
+        "headline": "A Multi-Agent Framework Powered by Language Models for Real Estate Intelligence Analysis",
+        "name": "A Multi-Agent Framework Powered by Language Models for Real Estate Intelligence Analysis",
+        "description": "MSc dissertation · FEUP & Confidencial Imobiliário · 2025 — 2026",
+        "url": "https://franciscoribeiro2003.github.io/projects/multi-agent-real-estate/",
+        "inLanguage": "en",
+        "author": {
+          "@id": "https://franciscoribeiro2003.github.io/#person"
+        },
+        "datePublished": "2025-01-01",
+        "keywords": "Python, LangGraph, PostgreSQL, PostGIS, LLM evaluation, Fine-tuning, Django",
+        "image": "https://pocketbase-cloudrun-761697169023.europe-southwest1.run.app/api/files/d84yh707iv0x3tv/9wdwdk9pun2yys0/thesis_cover_D43YXp0vYp.png?thumb=1600x0",
+        "articleBody": "My dissertation, titled “A Multi-Agent Framework Powered by Language Models for Real Estate Intelligence Analysis”, explored how far small open language models can be pushed in complex analytical workflows. Translates natural-language questions into spatial and temporal data operations and returns grounded SQL, maps, charts and narratives. Built on structured shared state, tool use, database grounding, review mechanisms and targeted fine-tuning of small open models. Designed the evaluation pipeline and benchmark used to measure the system end to end. One of the main conclusions was that small open models can operate the complete workflow when embedded in a multi-agent system with structured state, tool use, database grounding, review mechanisms, and targeted fine-tuning. At the same time, the work showed that model constraints can be reduced through system design, but not fully removed by orchestration or fine-tuning. Pipeline question → planner → sql agent / geo agent / narrative agent → shared state → map / chart / narrative",
+        "isPartOf": {
+          "@id": "https://franciscoribeiro2003.github.io/projects/"
+        }
+      }
+    ]
+  }
+  </script>
+  <!-- jsonld:end -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/css/markdown.css">
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("fr:theme");
+        if (t && t !== "system") document.documentElement.setAttribute("data-theme", t);
+        var l = localStorage.getItem("fr:lang");
+        if (l) document.documentElement.lang = l;
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/js/config.js"></script>
+
+  <!--
+    The markdown parser. Pinned to an exact version with a Subresource
+    Integrity hash, so a compromised CDN cannot change what runs here: the
+    browser refuses the file unless it hashes to exactly this.
+    `defer` keeps it off the critical path; the page module waits for it.
+  -->
+  <script
+    defer
+    src="https://cdnjs.cloudflare.com/ajax/libs/marked/18.0.12/lib/marked.umd.min.js"
+    integrity="sha512-Rwl0qg6jeeDcLQmm7Odr3U2D1lzsC1iglTnyuhZoEbL6QLDyWGIKY1bAnaQEvVtrhhAqaYALWvmJ94fITWX8og=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+</head>
+
+<body data-post-type="project" data-post-slug="multi-agent-real-estate">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="page">
+    <main id="main" class="reading">
+      <article class="entry" id="entry" aria-busy="true">
+        <p class="notice" data-i18n="common.loading">Loading…</p>
+      </article>
+    </main>
+  </div>
+
+  <script type="module" src="/js/pages/post.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://franciscoribeiro2003.github.io/sitemap.xml
