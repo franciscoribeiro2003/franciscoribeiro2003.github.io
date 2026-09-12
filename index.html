@@ -1,173 +1,209 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-updated="Sep 2026">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="nYfTtdcCCo_yB2H9zO1CpeC_mUDFvOcmXhnIMZ2fJEA" />
-    <title>Francisco Ribeiro | Portfolio</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/imgCV_PNG.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Include PocketBase from CDN -->
-    <script src="https://unpkg.com/pocketbase@0.19.0/dist/pocketbase.umd.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Everything between these markers is written by tools/prerender.mjs from
+       the page_seo records in PocketBase. Edit it there, not here. -->
+  <!-- seo:start -->
+  <title></title>
+  <meta name="description" content="">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://franciscoribeiro2003.github.io/">
+  <link rel="icon" href="/favicon.ico?v=692518ce" sizes="16x16 32x32 48x48">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:url" content="https://franciscoribeiro2003.github.io/">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:locale:alternate" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="">
+  <!-- seo:end -->
+  <!-- jsonld:start -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://franciscoribeiro2003.github.io/#person",
+        "url": "https://franciscoribeiro2003.github.io/"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://franciscoribeiro2003.github.io/#website",
+        "url": "https://franciscoribeiro2003.github.io/",
+        "inLanguage": [
+          "en",
+          "pt"
+        ]
+      }
+    ]
+  }
+  </script>
+  <!-- jsonld:end -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/guestbook.css">
+
+  <!-- Set the theme before first paint so dark mode never flashes white. -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("fr:theme");
+        if (t && t !== "system") document.documentElement.setAttribute("data-theme", t);
+        var l = localStorage.getItem("fr:lang");
+        if (l) document.documentElement.lang = l;
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/js/config.js"></script>
+  <!-- Only the home page uses a 3D model, so it is the only page paying for
+       this. See assets/low_poly_planet_earth/license.txt for the credit. -->
+  <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
 </head>
+
 <body>
-    <div class="loader-container">
-        <div class="loader"></div>
-    </div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Sidebar Navigation -->
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-header-content">
-                <div class="profile-image">
-                    <img src="images/placeholder-profile.png" alt="Francisco Ribeiro" id="profile-image">
-                </div>
-                <div class="profile-info">
-                    <h1 class="name">Francisco Ribeiro</h1>
-                    <p class="title" id="profile-title" data-i18n="hero.title">Software Developer</p>
-                </div>
-            </div>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
+  <div class="page">
+    <main id="main" class="stack" style="gap: var(--space-24)">
+
+      <!-- ---------- profile ---------- -->
+      <section class="profile" aria-labelledby="profile-name">
+        <!-- Swapped for a real <img> once the backend supplies a portrait. -->
+        <div class="profile__portrait profile__portrait--empty" id="profile-portrait">
+          <span class="t-mono-xs muted">portrait.jpg</span>
         </div>
-        
-        <div class="sidebar-content">
-            <nav class="sidebar-nav">
-                <ul class="nav-links">
-                    <li><a href="#about" class="nav-link" data-i18n="nav.about"><i class="fas fa-user"></i> <span>About</span></a></li>
-                    <li><a href="#experience" class="nav-link" data-i18n="nav.experience"><i class="fas fa-briefcase"></i> <span>Experience</span></a></li>
-                    <li><a href="#education" class="nav-link" data-i18n="nav.education"><i class="fas fa-graduation-cap"></i> <span>Education</span></a></li>
-                    <li><a href="#skills" class="nav-link" data-i18n="nav.skills"><i class="fas fa-code"></i> <span>Skills</span></a></li>
-                    <li><a href="#projects" class="nav-link" data-i18n="nav.projects"><i class="fas fa-laptop-code"></i> <span>Projects</span></a></li>
-                    <li><a href="#contact" class="nav-link" data-i18n="nav.contact"><i class="fas fa-envelope"></i> <span>Contact</span></a></li>
-                    <li><a href="assets/FranciscoRibeiro-CV.pdf" target="_blank" class="nav-link">
-                        <i class="fas fa-file-alt"></i> <span data-i18n="nav.cv">Resume / CV</span>
-                      </a></li>
-                </ul>
-            </nav>
-            
-            <div class="sidebar-footer">
-                <div class="social-links">
-                    <a href="https://github.com/franciscoribeiro2003" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/franciscoribeiro2003" target="_blank" class="social-link" id="linkedin-link">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://www.instagram.com/francisco_ribeiro.jpg" target="_blank" class="social-link" id="instagram-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-                
-                <div class="sidebar-actions">
-                    <button id="language-toggle" class="btn-icon">
-                        <span class="current-lang">EN</span>
-                    </button>
-                    <button id="theme-toggle" class="btn-icon">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
-            </div>
+
+        <div class="profile__body">
+          <h1 class="t-h2" id="profile-name"></h1>
+          <p class="t-body secondary" id="profile-role"></p>
+          <p class="t-body-l secondary" id="profile-bio"></p>
+          <hr class="rule">
+          <p class="profile__aside">
+            <span class="glyph" aria-hidden="true">↗</span>
+            <span id="profile-interests" data-i18n="home.aside">Beyond the computer: photography, or on a bike.</span>
+          </p>
         </div>
-    </aside>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- About Section -->
-        <section id="about" class="section">
-            <h2 class="section-title" data-i18n="about.title">About Me</h2>
-            <div class="about-content">
-                <div id="about-text"></div>
-                <div class="about-actions">
-                    <a href="assets/FranciscoRibeiro-CV.pdf" target="_blank" class="btn btn-primary btn-with-icon" data-i18n="about.downloadCV">
-                        <i class="fas fa-download"></i> <span>Download CV</span>
-                    </a>
-                </div>
+        <div class="guestbook-cue">
+          <!-- Decorative: the button beside it already carries the accessible
+               name, so a screen reader would otherwise hear it twice. -->
+          <span class="guestbook-cue__note" aria-hidden="true">
+            <span data-i18n="home.guestbookCue">Write or draw something on my guestbook</span>
+            <span class="guestbook-cue__arrow">→</span>
+          </span>
+          <button class="notebook-btn" id="guestbook-open" type="button"
+                  data-i18n="home.guestbook" data-i18n-attr="aria-label"
+                  aria-label="Open the guestbook" aria-haspopup="dialog">
+            <span class="notebook-btn__spine" aria-hidden="true"></span>
+            <span class="notebook-btn__line" style="top: 22px" aria-hidden="true"></span>
+            <span class="notebook-btn__line" style="top: 32px" aria-hidden="true"></span>
+            <span class="notebook-btn__line" style="top: 42px" aria-hidden="true"></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ---------- mosaic ---------- -->
+      <div class="mosaic">
+
+        <div class="mosaic__row mosaic__row--wide-square">
+
+          <a class="tile tile--link" href="/projects/" aria-labelledby="tile-projects">
+            <div class="tile__header">
+              <span class="tile__title" id="tile-projects" data-i18n="home.projects">projects/</span>
+              <span class="tile__meta"><span id="project-count">—</span> <span data-i18n="home.repositories">repositories</span> &nbsp;→</span>
             </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section id="experience" class="section">
-            <h2 class="section-title" data-i18n="experience.title">Experience</h2>
-            <div class="timeline" id="experience-timeline"></div>
-        </section>
-
-        <!-- Education Section -->
-        <section id="education" class="section">
-            <h2 class="section-title" data-i18n="education.title">Education</h2>
-            <div class="timeline" id="education-timeline"></div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="section">
-            <h2 class="section-title" data-i18n="skills.title">Skills</h2>
-            <div class="skills-grid" id="skills-container"></div>
-        </section>
-
-        <!-- Languages Section -->
-        <section id="languages" class="section">
-            <h2 class="section-title" data-i18n="languages.title">Languages</h2>
-            <div class="languages-container" id="languages-container"></div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="section">
-            <h2 class="section-title" data-i18n="projects.title">Projects</h2>
-            <div class="projects-grid" id="projects-grid"></div>
-        </section>
-
-        <!-- Volunteering Section -->
-        <section id="volunteering" class="section">
-            <h2 class="section-title" data-i18n="volunteering.title">Volunteering</h2>
-            <div class="timeline" id="volunteering-timeline"></div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="section">
-            <h2 class="section-title" data-i18n="contact.title">Contact Me</h2>
-            <div class="contact-container">
-                <div class="contact-form">
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <label for="name" data-i18n="contact.name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" data-i18n="contact.email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message" data-i18n="contact.message">Message</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" data-i18n="contact.send">Send Message</button>
-                    </form>
+            <div class="tile__split">
+              <div class="tree" id="home-tree"></div>
+              <div class="slideshow" id="home-slideshow">
+                <div class="slideshow__frame">
+                  <p class="slideshow__caption" id="slideshow-caption">multi-agent-real-estate</p>
                 </div>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span id="contact-email">franciscorib2003@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span id="contact-location">Porto, Portugal</span>
-                    </div>
-                </div>
+                <div class="slideshow__dots" id="slideshow-dots" aria-hidden="true"></div>
+              </div>
             </div>
+          </a>
+
+          <!-- Not an <a>: the info button below needs to be a real interactive
+               element, and an <a> may not contain interactive descendants.
+               role="link" + tabindex + the keydown/click handlers in home.js
+               reproduce anchor behaviour (Enter, click-anywhere-to-navigate)
+               without that. -->
+          <div class="tile tile--link tile--map" id="map-tile" role="link"
+               tabindex="0" aria-labelledby="tile-map">
+            <div class="tile__header">
+              <span class="tile__title" id="tile-map" data-i18n="home.map">map/</span>
+            </div>
+            <model-viewer
+              class="globe-preview" id="globe-preview"
+              src="/assets/low_poly_planet_earth/scene.gltf"
+              alt="A rotating 3D model of Earth"
+              camera-controls disable-zoom disable-pan
+              interaction-prompt="none"
+              auto-rotate rotation-per-second="16deg"
+              shadow-intensity="0"
+              loading="eager" reveal="auto"
+            ></model-viewer>
+
+            <div class="tile__info-wrap">
+              <button type="button" class="tile__info" id="model-info-btn"
+                      aria-describedby="model-info-panel" aria-label="3D model credit">i</button>
+              <div class="tile__info-panel" id="model-info-panel" role="tooltip">
+                This 3D model was made by:<br>
+                <strong>Jacobs Development</strong> · CC BY 4.0
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <section class="tile" aria-labelledby="tile-exp">
+          <div class="tile__header">
+            <span class="tile__title" id="tile-exp" data-i18n="home.experience">experience/</span>
+            <span class="tile__meta" id="experience-range">2024 — present</span>
+          </div>
+          <div class="timeline" id="home-experience"></div>
         </section>
-        
-        <footer>
-            <p>&copy; <span id="current-year">2025</span> Francisco Ribeiro. <span data-i18n="footer.rights">All rights reserved.</span></p>
-        </footer>
+
+        <div class="mosaic__row mosaic__row--halves">
+
+          <section class="tile" aria-labelledby="tile-edu">
+            <div class="tile__header">
+              <span class="tile__title" id="tile-edu" data-i18n="home.education">education/</span>
+              <span class="tile__meta" id="education-range">2021 — 2026</span>
+            </div>
+            <div class="degrees" id="home-education"></div>
+          </section>
+
+          <section class="tile" aria-labelledby="tile-contact">
+            <div class="tile__header">
+              <span class="tile__title" id="tile-contact" data-i18n="home.contact">contact/</span>
+            </div>
+            <p class="t-body-l secondary" data-i18n="home.contactLead">
+              Happy to talk about stuff :)
+            </p>
+            <div class="contact-links" id="home-contact"></div>
+          </section>
+
+        </div>
+      </div>
     </main>
-    <script src="js/config.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/i18n.js"></script>
+  </div>
+
+  <!-- ---------- guestbook overlay ---------- -->
+  <div class="gb" id="guestbook" role="dialog" aria-modal="true" aria-label="Guestbook" hidden></div>
+
+  <script type="module" src="/js/pages/home.js"></script>
 </body>
 </html>

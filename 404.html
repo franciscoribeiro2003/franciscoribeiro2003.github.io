@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-updated="Sep 2026">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Not found</title>
+  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("fr:theme");
+        if (t && t !== "system") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="page">
+    <main id="main" class="stack" style="gap: var(--space-16)">
+      <p class="t-mono secondary">
+        fribeiro@home:~$ cd <span id="wanted">that page</span>
+      </p>
+      <p class="t-mono muted">bash: cd: No such file or directory</p>
+      <p class="t-body-l secondary" style="margin-top: var(--space-24)">
+        Nothing lives at that address. The pieces of this site are
+        <a class="accent" href="/">home</a>,
+        <a class="accent" href="/projects/">projects</a>,
+        <a class="accent" href="/photography/">photography</a>,
+        <a class="accent" href="/map/">the map</a> and
+        <a class="accent" href="/blog/">the blog</a>.
+      </p>
+    </main>
+  </div>
+  <script type="module">
+    import { initSite, $, t } from "/js/core/site.js";
+    import { loadContent } from "/js/core/data.js";
+    initSite();
+    $("#wanted").textContent = location.pathname.replace(/^\//, "") || "that page";
+    // The owner's name is content, so it is appended once it loads rather than
+    // written into this file. 404 is never prerendered — GitHub Pages serves
+    // it for any unknown path, so it has no URL of its own to bake.
+    loadContent()
+      .then((c) => {
+        const name = c.profile?.name;
+        if (name) document.title = `${document.title} — ${name}`;
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+  Template for a single post's page.
+
+  `tools/prerender.mjs` copies this once per published post to
+  /blog/<slug>/index.html and /projects/<slug>/index.html, replacing only the
+  seo: and jsonld: blocks and the two data- attributes on <body>. The body
+  markup below is a shell — the title, the cover and the markdown are fetched
+  from PocketBase at runtime, like every other page on this site.
+
+  Per-post SEO is the whole reason these files exist. Meta tags have to be in
+  the HTML a crawler receives, and a crawler receives one file per URL, so a
+  post that wants its own title and description needs its own URL. The pages
+  are generated at deploy time and never committed.
+-->
+<html lang="en" data-updated="Sep 2026">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- seo:start -->
+  <!-- seo:end -->
+  <!-- jsonld:start -->
+  <!-- jsonld:end -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/css/markdown.css">
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("fr:theme");
+        if (t && t !== "system") document.documentElement.setAttribute("data-theme", t);
+        var l = localStorage.getItem("fr:lang");
+        if (l) document.documentElement.lang = l;
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/js/config.js"></script>
+
+  <!--
+    The markdown parser. Pinned to an exact version with a Subresource
+    Integrity hash, so a compromised CDN cannot change what runs here: the
+    browser refuses the file unless it hashes to exactly this.
+    `defer` keeps it off the critical path; the page module waits for it.
+  -->
+  <script
+    defer
+    src="https://cdnjs.cloudflare.com/ajax/libs/marked/18.0.12/lib/marked.umd.min.js"
+    integrity="sha512-Rwl0qg6jeeDcLQmm7Odr3U2D1lzsC1iglTnyuhZoEbL6QLDyWGIKY1bAnaQEvVtrhhAqaYALWvmJ94fITWX8og=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+</head>
+
+<body data-post-type="blog" data-post-slug="">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="page">
+    <main id="main" class="reading">
+      <article class="entry" id="entry" aria-busy="true">
+        <p class="notice" data-i18n="common.loading">Loading…</p>
+      </article>
+    </main>
+  </div>
+
+  <script type="module" src="/js/pages/post.js"></script>
+</body>
+</html>

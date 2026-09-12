@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-updated="Sep 2026">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- seo:start -->
+  <title></title>
+  <meta name="description" content="0 bikepacking trips, 0 stages, 0 km.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://franciscoribeiro2003.github.io/map/">
+  <link rel="icon" href="/favicon.ico?v=692518ce" sizes="16x16 32x32 48x48">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="0 bikepacking trips, 0 stages, 0 km.">
+  <meta property="og:url" content="https://franciscoribeiro2003.github.io/map/">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:locale:alternate" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="0 bikepacking trips, 0 stages, 0 km.">
+  <!-- seo:end -->
+  <!-- jsonld:start -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://franciscoribeiro2003.github.io/#person",
+        "url": "https://franciscoribeiro2003.github.io/"
+      },
+      {
+        "@type": "ItemList",
+        "name": "Bikepacking trips",
+        "itemListElement": []
+      }
+    ]
+  }
+  </script>
+  <!-- jsonld:end -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.6.0/maplibre-gl.min.css">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("fr:theme");
+        if (t && t !== "system") document.documentElement.setAttribute("data-theme", t);
+        var l = localStorage.getItem("fr:lang");
+        if (l) document.documentElement.lang = l;
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/js/config.js"></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="page page--app">
+    <main id="main" class="map-split">
+
+      <!-- ---------- left: travel journal ---------- -->
+      <section class="journal" aria-label="Trips">
+        <div class="chips" id="mode-filters" role="group" aria-label="Transport mode"></div>
+
+        <div class="journal__head">
+          <h2 class="t-caps muted" data-i18n="map.trips">Trips</h2>
+          <span class="t-mono-xs muted" id="trip-count">—</span>
+        </div>
+
+        <div class="trip-list" id="trip-list"></div>
+
+        <hr class="rule">
+
+        <article class="story" id="story" aria-live="polite"></article>
+      </section>
+
+      <!-- ---------- right: globe ---------- -->
+      <section class="globe-panel" aria-label="Interactive globe">
+        <div id="globe"></div>
+
+        <div class="globe-overlay globe-overlay--caption">
+          <p class="globe-caption__title" id="globe-title">all routes</p>
+          <p class="globe-caption__meta" id="globe-meta">—</p>
+        </div>
+
+        <p class="globe-overlay globe-overlay--hint" data-i18n="map.hint">
+          drag to rotate · scroll to zoom
+        </p>
+
+        <div class="globe-overlay globe-overlay--controls">
+          <button type="button" id="zoom-in" aria-label="Zoom in">+</button>
+          <button type="button" id="zoom-out" aria-label="Zoom out">−</button>
+          <button type="button" id="reset-view" aria-label="Show all routes">⊙</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/5.6.0/maplibre-gl.js"></script>
+  <script type="module" src="/js/pages/map.js"></script>
+</body>
+</html>

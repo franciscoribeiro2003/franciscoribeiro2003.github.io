@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" data-updated="Sep 2026">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- seo:start -->
+  <title></title>
+  <meta name="description" content="0 posts.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://franciscoribeiro2003.github.io/blog/">
+  <link rel="icon" href="/favicon.ico?v=692518ce" sizes="16x16 32x32 48x48">
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="0 posts.">
+  <meta property="og:url" content="https://franciscoribeiro2003.github.io/blog/">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:locale:alternate" content="pt_PT">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="">
+  <meta name="twitter:description" content="0 posts.">
+  <!-- seo:end -->
+  <!-- jsonld:start -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://franciscoribeiro2003.github.io/#person",
+        "url": "https://franciscoribeiro2003.github.io/"
+      },
+      {
+        "@type": "Blog",
+        "@id": "https://franciscoribeiro2003.github.io/blog/#blog",
+        "name": "Blog",
+        "author": {
+          "@id": "https://franciscoribeiro2003.github.io/#person"
+        },
+        "blogPost": []
+      }
+    ]
+  }
+  </script>
+  <!-- jsonld:end -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("fr:theme");
+        if (t && t !== "system") document.documentElement.setAttribute("data-theme", t);
+        var l = localStorage.getItem("fr:lang");
+        if (l) document.documentElement.lang = l;
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/js/config.js"></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="page">
+    <main id="main" class="reading">
+      <p class="page__intro" data-i18n="blog.intro">
+        Notes on things I worked out the hard way — some technical, some not.
+      </p>
+
+      <div class="chips" id="topic-filters" role="group" aria-label="Topics"></div>
+
+      <div class="posts" id="post-list"></div>
+    </main>
+  </div>
+
+  <script type="module" src="/js/pages/blog.js"></script>
+</body>
+</html>
