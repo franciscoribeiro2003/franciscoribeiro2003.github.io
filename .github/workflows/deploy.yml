@@ -4,10 +4,12 @@ on:
   push:
     branches: [main]
   # Page content is fetched from PocketBase at runtime and needs no deploy. The
-  # nightly run exists only to refresh the baked <head> — the SEO copy, Open
+  # scheduled run exists only to refresh the baked <head> — the SEO copy, Open
   # Graph tags and sitemap that a crawler reads before any JavaScript runs.
+  # Runs on days 1, 11, 21 and 31 of the month; after editing SEO or adding a
+  # post, trigger it by hand with workflow_dispatch instead of waiting.
   schedule:
-    - cron: "17 5 * * *"
+    - cron: "17 5 */10 * *"
   workflow_dispatch:
 
 permissions:
